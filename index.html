@@ -4,48 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linkvertise Completion</title>
-    <script>
-        // Function to extract parameters from URL query string
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        // Function to check if 'completed' parameter is present in URL
-        function checkCompletion() {
-            var completed = getParameterByName('completed');
-            if (completed === 'true') {
-                var confirmation = confirm("Congratulations! You're whitelisted. Go back to Discord and use /pg free.");
-                if (confirmation) {
-                    window.location.href = "https://discord.gg/4TtJ2NwAmS"; // Replace with your Discord invite link
-                } else {
-                    window.location.href = "https://link-hub.net/1144000/pg-bot-keys"; // Redirect to another page if user clicks 'Cancel'
-                }
-            } else {
-                alert("Sorry, you're not whitelisted. Please complete the required action first.");
-                window.location.href = "https://link-hub.net/1144000/pg-bot-keys"; // Redirect to another page if not whitelisted
-            }
-        }
-
-        // Check for completion when the page loads
-        window.onload = function() {
-            var accessedDirectly = !getParameterByName('completed');
-            if (accessedDirectly) {
-                alert("You can't access this page directly. Please complete the Linkvertise step first.");
-                window.location.href = "https://link-hub.net/1144000/pg-bot-keys"; // Redirect to another page if accessed directly
-            } else {
-                checkCompletion();
-            }
-        };
-    </script>
 </head>
 <body>
     <h1>Linkvertise Completion</h1>
-    <p>We are checking your completion...</p>
+    <p>Enter the key you received to access the content:</p>
+    <form id="keyForm">
+        <input type="text" id="keyInput" name="key" required>
+        <button type="submit">Verify Key</button>
+    </form>
+    <script>
+        document.getElementById("keyForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const key = document.getElementById("keyInput").value;
+            const response = await fetch(`http://localhost:5000/verify_key?key=${encodeURIComponent(key)}`);
+            const data = await response.json();
+            if (data.valid) {
+                alert("Key verified. Access granted!");
+                // Redirect the user to the desired page after key verification
+                window.location.href = "https://discord.gg/4TtJ2NwAmS";
+            } else {
+                alert("Invalid key. Access denied.");
+            }
+        });
+    </script>
 </body>
 </html>
