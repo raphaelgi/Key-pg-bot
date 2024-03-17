@@ -12,11 +12,13 @@
         <input type="text" id="keyInput" name="key" required>
         <button type="submit">Verify Key</button>
     </form>
+    <p>Made by drazzerqcr6</p> <!-- Information about the creator -->
+    <p id="linkvertiseLink" style="display: none;">Linkvertise link: <a id="link" href="https://link-hub.net/1144000/pg-bot-keys" target="_blank">Click here to access</a></p>
     <script>
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             const key = document.getElementById("keyInput").value;
-            const response = await fetch(`http://localhost:5000/verify_key?key=${encodeURIComponent(key)}`);
+            const response = await fetch(`/verify_key?key=${encodeURIComponent(key)}`);
             const data = await response.json();
             if (data.valid) {
                 alert("Key verified. Access granted!");
@@ -24,6 +26,7 @@
                 window.location.href = "https://discord.gg/4TtJ2NwAmS";
             } else {
                 alert("Invalid key. Access denied.");
+                document.getElementById("linkvertiseLink").style.display = "block"; // Show Linkvertise link
             }
         });
     </script>
