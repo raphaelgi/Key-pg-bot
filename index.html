@@ -22,10 +22,14 @@
             try {
                 const data = await response.json();
                 if (response.ok) {
-                    if (data.valid) {
-                        document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the Roblox account.";
+                    if (data.valid !== undefined) {
+                        if (data.valid) {
+                            document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the Roblox account.";
+                        } else {
+                            document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
+                        }
                     } else {
-                        document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
+                        throw new Error("Invalid response from server.");
                     }
                 } else {
                     throw new Error(data.error || "Server error occurred.");
