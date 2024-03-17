@@ -17,26 +17,26 @@
     <script>
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
+            await verifyKey();
+        });
+
+        // Function to verify the key
+        async function verifyKey() {
             const key = document.getElementById("keyInput").value;
-            const response = await fetch(`/verify_key?key=${encodeURIComponent(key)}`);
-            try {
-                const data = await response.json();
-                if (response.ok) {
-                    if (data.valid !== undefined) {
-                        if (data.valid) {
-                            document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the Roblox account.";
-                        } else {
-                            document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
-                        }
-                    } else {
-                        throw new Error("Invalid response from server.");
-                    }
-                } else {
-                    throw new Error(data.error || "Server error occurred.");
-                }
-            } catch (error) {
-                console.error("Error:", error.message);
-                document.getElementById("resultMessage").innerText = "An error occurred. Please try again later.";
+            const response = await fetch(`http://yourserver.com/verify_key?key=${encodeURIComponent(key)}`);
+            const data = await response.json();
+            if (data.valid) {
+                document.getElementById("resultMessage").innerText = "Key approved!";
+            } else {
+                document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
+            }
+        }
+
+        // Listen for "Enter" key press
+        document.getElementById("keyInput").addEventListener("keydown", async function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                await verifyKey(); // Call the verifyKey function
             }
         });
     </script>
