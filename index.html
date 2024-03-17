@@ -23,7 +23,7 @@
         // Function to verify the key
         async function verifyKey() {
             const key = document.getElementById("keyInput").value;
-            const response = await fetch(`http://yourserver.com/verify_key?key=${encodeURIComponent(key)}`);
+            const response = await fetch(`https://raphaelgi.github.io/Key-pg-bot/verify_key?key=${encodeURIComponent(key)}`);
             const data = await response.json();
             if (data.valid) {
                 document.getElementById("resultMessage").innerText = "Key approved!";
