@@ -14,6 +14,7 @@
     </form>
     <p>Made by drazzerqcr6</p> <!-- Information about the creator -->
     <p id="resultMessage"></p>
+    <button id="linkvertiseButton" style="display: none;">Complete Linkvertise</button>
     <script>
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
@@ -24,7 +25,13 @@
                 document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the PG bot (password guessing bot).";
             } else {
                 document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
+                document.getElementById("linkvertiseButton").style.display = "block";
             }
+        });
+
+        document.getElementById("linkvertiseButton").addEventListener("click", function() {
+            // Redirect to the Linkvertise page
+            window.location.href = "https://link-hub.net/1144000/pg-bot-keys";
         });
     </script>
 </body>
