@@ -16,7 +16,7 @@
     <p id="resultMessage"></p>
     <script>
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent the default form submission behavior
             const key = document.getElementById("keyInput").value;
             const response = await fetch(`/verify_key?key=${encodeURIComponent(key)}`);
             const data = await response.json();
