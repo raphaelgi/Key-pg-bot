@@ -21,7 +21,7 @@
             const response = await fetch("http://127.0.0.1:5000/verify_key?key=" + encodeURIComponent(key));
             const data = await response.json();
             if (data.valid) {
-                document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the Roblox account.";
+                document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the PG bot (password guessing bot).";
             } else {
                 document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
             }
