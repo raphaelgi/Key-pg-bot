@@ -18,12 +18,12 @@
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             const key = document.getElementById("keyInput").value;
-            const response = await fetch(`https://yourserver.com/verify_key?key=${encodeURIComponent(key)}`);
+            const response = await fetch(`/verify_key?key=${encodeURIComponent(key)}`);
             const data = await response.json();
             if (data.valid) {
-                document.getElementById("resultMessage").innerText = "Key approved!";
+                document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the Roblox account.";
             } else {
-                document.getElementById("resultMessage").innerText = "Invalid key. Please try again.";
+                document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
             }
         });
     </script>
