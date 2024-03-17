@@ -1,61 +1,31 @@
-from flask import Flask, request, jsonify, render_template
-import time
-import json
-
-app = Flask(__name__)
-
-# File to store valid keys
-KEYS_FILE = "valid_keys.json"
-
-# Dictionary to store valid keys and their expiration times
-valid_keys = {}
-
-# Function to verify keys
-def verify_key(key):
-    if key in valid_keys:
-        # Check if the key has not expired
-        if time.time() < valid_keys[key]:
-            return True
-    return False
-
-# Load valid keys from file
-def load_keys():
-    global valid_keys
-    try:
-        with open(KEYS_FILE, "r") as file:
-            valid_keys = json.load(file)
-    except FileNotFoundError:
-        # Create the file if it doesn't exist
-        save_keys()
-
-# Save valid keys to file
-def save_keys():
-    with open(KEYS_FILE, "w") as file:
-        json.dump(valid_keys, file)
-
-# Serve the HTML file
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-# Endpoint to verify keys
-@app.route('/verify_key', methods=['GET'])
-def verify_key_route():
-    key = request.args.get('key')
-    if verify_key(key):
-        return jsonify({'valid': True})
-    return jsonify({'valid': False, 'error': 'Invalid key.'})
-
-# Endpoint to add keys
-@app.route('/add_key', methods=['POST'])
-def add_key():
-    key = request.form.get('key')
-    if key:
-        valid_keys[key] = time.time() + 86400  # 24 hours expiration
-        save_keys()  # Save keys to file
-        return jsonify({'success': True})
-    return jsonify({'success': False, 'error': 'No key provided'})
-
-if __name__ == '__main__':
-    load_keys()  # Load keys when the server starts
-    app.run(debug=True)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linkvertise Completion</title>
+</head>
+<body>
+    <h1>Linkvertise Completion</h1>
+    <p>Enter the key you received to access the content:</p>
+    <form id="keyForm">
+        <input type="text" id="keyInput" name="key" required>
+        <button type="submit">Verify Key</button>
+    </form>
+    <p>Made by drazzerqcr6</p> <!-- Information about the creator -->
+    <p id="resultMessage"></p>
+    <script>
+        document.getElementById("keyForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const key = document.getElementById("keyInput").value;
+            const response = await fetch(`https://yourserver.com/verify_key?key=${encodeURIComponent(key)}`);
+            const data = await response.json();
+            if (data.valid) {
+                document.getElementById("resultMessage").innerText = "Key approved!";
+            } else {
+                document.getElementById("resultMessage").innerText = "Invalid key. Please try again.";
+            }
+        });
+    </script>
+</body>
+</html>
