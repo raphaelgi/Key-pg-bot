@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import time
 import json
 
@@ -32,6 +32,11 @@ def load_keys():
 def save_keys():
     with open(KEYS_FILE, "w") as file:
         json.dump(valid_keys, file)
+
+# Serve the HTML file
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Endpoint to verify keys
 @app.route('/verify_key', methods=['GET'])
