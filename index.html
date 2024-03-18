@@ -49,6 +49,7 @@
             margin-top: 20px;
             outline: none; /* Remove default input field outline */
             transition: background-color 0.3s ease;
+            display: block; /* Ensure input field is initially visible */
         }
         #keyInput:focus {
             background-color: #5c005c; /* Change background color of input field when focused */
@@ -89,7 +90,7 @@
     <p>Enter the key you received to access the content:</p>
     <div id="keyForm">
         <input type="text" id="keyInput" name="key" placeholder="Enter key..." required>
-        <button type="submit" id="verifyBtn">Verify Key</button>
+        <button type="button" id="verifyBtn">Verify Key</button> <!-- Change to type="button" to prevent form submission -->
     </div>
     <div class="content">
         <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal or join my Discord server.</p>
@@ -100,6 +101,16 @@
     <button id="pgBotKeyBtn">PG Bot Key</button>
     <button onclick="window.location.href='https://discord.gg/4bxAMYQDeP'">Discord</button>
     <script>
+        // Function to show loading overlay
+        function showLoading() {
+            document.getElementById("loadingOverlay").style.display = "block";
+        }
+
+        // Function to hide loading overlay
+        function hideLoading() {
+            document.getElementById("loadingOverlay").style.display = "none";
+        }
+
         document.getElementById("creatorBtn").addEventListener("click", function() {
             var content = document.querySelector(".content");
             content.classList.toggle("active");
@@ -110,15 +121,12 @@
             keyInput.classList.toggle("active");
         });
 
-        document.getElementById("keyForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            // Show loading overlay
-            document.getElementById("loadingOverlay").style.display = "block";
+        document.getElementById("verifyBtn").addEventListener("click", async function() {
+            showLoading(); // Show loading overlay
             const key = document.getElementById("keyInput").value;
             const response = await fetch("http://127.0.0.1:5000/verify_key?key=" + encodeURIComponent(key));
             const data = await response.json();
-            // Hide loading overlay after verification
-            document.getElementById("loadingOverlay").style.display = "none";
+            hideLoading(); // Hide loading overlay
             if (data.valid) {
                 document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the PG bot (password guessing bot).";
             } else {
