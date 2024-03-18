@@ -117,8 +117,8 @@
         });
 
         document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
-            var keyInput = document.getElementById("keyForm");
-            keyInput.classList.toggle("active");
+            var keyForm = document.getElementById("keyForm");
+            keyForm.classList.toggle("active");
         });
 
         document.getElementById("verifyBtn").addEventListener("click", async function() {
@@ -132,6 +132,12 @@
             } else {
                 document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
             }
+        });
+
+        // Show loading overlay on page load
+        window.addEventListener("load", function() {
+            showLoading();
+            setTimeout(hideLoading, 2000); // Hide loading overlay after 2 seconds (simulating page load)
         });
     </script>
 </body>
