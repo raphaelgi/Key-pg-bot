@@ -4,6 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linkvertise Completion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #1e90ff; /* Change the color of the heading */
+            animation: fadeIn 2s ease-in-out; /* Add animation to the heading */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        button {
+            background-color: #1e90ff; /* Change the background color of the button */
+            color: #fff; /* Change the text color of the button */
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #007bff; /* Change the background color on hover */
+        }
+    </style>
 </head>
 <body>
     <h1>Linkvertise Completion</h1>
@@ -15,7 +43,12 @@
     <p>Made by drazzerqcr6</p> <!-- Information about the creator -->
     <p id="resultMessage"></p>
     <button onclick="window.location.href='https://discord.gg/4bxAMYQDeP'">Discord</button>
+    <button id="pgBotKeyBtn">PG Bot Key</button> <!-- Add a button for PG bot key -->
     <script>
+        document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
+            document.getElementById("keyInput").focus(); // Focus on the input field
+        });
+
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             const key = document.getElementById("keyInput").value;
