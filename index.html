@@ -11,6 +11,7 @@
             color: #fff; /* Change text color to white */
             text-align: center;
             padding-top: 50px; /* Add padding to center content vertically */
+            position: relative; /* Set position to relative for loading overlay */
         }
         h1 {
             color: #1e90ff; /* Change the color of the heading */
@@ -52,9 +53,38 @@
         #keyInput:focus {
             background-color: #5c005c; /* Change background color of input field when focused */
         }
+        .loading-overlay {
+            position: fixed; /* Fix the overlay position */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            z-index: 9999; /* Ensure the overlay appears on top of other content */
+            display: none; /* Initially hide the overlay */
+        }
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid #fff;
+            border-top: 5px solid #800080; /* Purple border for spinner */
+            border-radius: 50%;
+            animation: spin 1s linear infinite; /* Spin animation */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
     <h1>Linkvertise Completion</h1>
     <p>Enter the key you received to access the content:</p>
     <div id="keyForm">
@@ -82,9 +112,13 @@
 
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
+            // Show loading overlay
+            document.getElementById("loadingOverlay").style.display = "block";
             const key = document.getElementById("keyInput").value;
             const response = await fetch("http://127.0.0.1:5000/verify_key?key=" + encodeURIComponent(key));
             const data = await response.json();
+            // Hide loading overlay after verification
+            document.getElementById("loadingOverlay").style.display = "none";
             if (data.valid) {
                 document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the PG bot (password guessing bot).";
             } else {
