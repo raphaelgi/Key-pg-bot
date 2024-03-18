@@ -103,7 +103,7 @@
     <p>Enter the key you received to access the content:</p>
     <div id="keyForm">
         <input type="text" id="keyInput" name="key" placeholder="Enter key..." required>
-        <button type="button" id="verifyBtn">Verify Key</button>
+        <button type="button" id="verifyBtn">Verify Key</button> <!-- Change to type="button" to prevent form submission -->
     </div>
     <div class="content">
         <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal (<a href="https://www.paypal.me/raph33214">https://www.paypal.me/raph33214</a>) or join my Discord server.</p>
@@ -137,15 +137,20 @@
         document.getElementById("verifyBtn").addEventListener("click", async function() {
             showLoading(); // Show loading overlay
             const key = document.getElementById("keyInput").value;
-            
-            // Simulate verifying key
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate server-side verification
-            
-            // Assume key verification is successful
-            // Here you can replace the alert with your logic to activate the key for the user's account
-            alert("Key verified and activated for your account!");
-            
-            hideLoading(); // Hide loading overlay
+            try {
+                const response = await fetch("/verify_key?key=" + encodeURIComponent(key));
+                const data = await response.json();
+                if (data.valid) {
+                    document.getElementById("resultMessage").innerText = "Key verified and activated.";
+                } else {
+                    document.getElementById("resultMessage").innerText = "Invalid key.";
+                }
+            } catch (error) {
+                console.error("Error verifying key:", error);
+                document.getElementById("resultMessage").innerText = "Error verifying key.";
+            } finally {
+                hideLoading(); // Hide loading overlay
+            }
         });
 
         // Show loading overlay on page load
