@@ -40,27 +40,44 @@
         .content.active {
             display: block; /* Show the content when active class is applied */
         }
+        #keyInput {
+            background-color: #800080; /* Change background color of input field to purple */
+            color: #fff; /* Change text color of input field to white */
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            outline: none; /* Remove default input field outline */
+            transition: background-color 0.3s ease;
+        }
+        #keyInput:focus {
+            background-color: #5c005c; /* Change background color of input field when focused */
+        }
     </style>
 </head>
 <body>
     <h1>Linkvertise Completion</h1>
     <p>Enter the key you received to access the content:</p>
-    <form id="keyForm">
-        <input type="text" id="keyInput" name="key" required>
+    <div id="keyForm">
+        <input type="text" id="keyInput" name="key" placeholder="Enter key..." required>
         <button type="submit" id="verifyBtn">Verify Key</button>
-    </form>
+    </div>
     <div class="content">
         <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal or join my Discord server.</p>
         <button id="supportBtn">Support</button>
     </div>
     <p id="resultMessage"></p>
+    <button id="creatorBtn">Creator</button>
     <button id="pgBotKeyBtn">PG Bot Key</button>
     <button onclick="window.location.href='https://discord.gg/4bxAMYQDeP'">Discord</button>
     <script>
-        // Show/hide content when clicking Creator button
-        document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
+        document.getElementById("creatorBtn").addEventListener("click", function() {
             var content = document.querySelector(".content");
             content.classList.toggle("active");
+        });
+
+        document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
+            var keyInput = document.getElementById("keyForm");
+            keyInput.classList.toggle("active");
         });
 
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
