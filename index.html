@@ -86,7 +86,7 @@
         }
         .loading-text {
             position: absolute;
-            top: 50%;
+            top: 60%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff; /* Text color */
@@ -106,7 +106,7 @@
         <button type="button" id="verifyBtn">Verify Key</button> <!-- Change to type="button" to prevent form submission -->
     </div>
     <div class="content">
-        <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal (<a href="Your_paypal_link">Your_paypal_link</a>) or join my Discord server.</p>
+        <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal (<a href="https://www.paypal.me/raph33214">https://www.paypal.me/raph33214</a>) or join my Discord server.</p>
         <button id="supportBtn">Support</button>
     </div>
     <p id="resultMessage"></p>
@@ -137,11 +137,16 @@
         document.getElementById("verifyBtn").addEventListener("click", async function() {
             showLoading(); // Show loading overlay
             const key = document.getElementById("keyInput").value;
-            // Simulating a delay of 5 seconds for loading
-            setTimeout(function() {
-                document.getElementById("loadingText").innerText = "Loading... 100%"; // Update loading text
-                setTimeout(hideLoading, 1000); // Hide loading overlay after 1 second
-            }, 5000);
+            var progress = 0; // Initialize progress
+            // Increment progress every second until it reaches 100%
+            var interval = setInterval(function() {
+                progress += 1;
+                document.getElementById("loadingText").innerText = `Loading... ${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(interval); // Stop the interval when progress reaches 100%
+                    setTimeout(hideLoading, 1000); // Hide loading overlay after 1 second
+                }
+            }, 50); // Update progress every 50 milliseconds
         });
 
         // Show loading overlay on page load
