@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: green; /* Change background color to green */
             color: #333;
             text-align: center;
         }
@@ -20,8 +20,8 @@
             to { opacity: 1; }
         }
         button {
-            background-color: #1e90ff; /* Change the background color of the button */
-            color: #fff; /* Change the text color of the button */
+            background-color: purple; /* Change background color of buttons to purple */
+            color: black; /* Change text color of buttons to black */
             border: none;
             padding: 10px 20px;
             margin-top: 20px;
@@ -29,7 +29,10 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #007bff; /* Change the background color on hover */
+            background-color: #800080; /* Change background color on hover to dark purple */
+        }
+        #infoParagraph {
+            display: none; /* Initially hide the info paragraph */
         }
     </style>
 </head>
@@ -40,15 +43,12 @@
         <input type="text" id="keyInput" name="key" required>
         <button type="submit">Verify Key</button>
     </form>
-    <p>Made by drazzerqcr6</p> <!-- Information about the creator -->
+    <p id="infoParagraph">I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal or join my Discord server.</p>
+    <button id="creatorBtn">Creator</button> <!-- Add button for showing creator information -->
     <p id="resultMessage"></p>
     <button onclick="window.location.href='https://discord.gg/4bxAMYQDeP'">Discord</button>
-    <button id="pgBotKeyBtn">PG Bot Key</button> <!-- Add a button for PG bot key -->
+    <button id="pgBotKeyBtn">PG Bot Key</button> <!-- Add button for PG bot key -->
     <script>
-        document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
-            document.getElementById("keyInput").focus(); // Focus on the input field
-        });
-
         document.getElementById("keyForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             const key = document.getElementById("keyInput").value;
@@ -58,6 +58,26 @@
                 document.getElementById("resultMessage").innerText = "Key added successfully! You have 24 hours to access the PG bot (password guessing bot).";
             } else {
                 document.getElementById("resultMessage").innerText = "Wrong key. Please complete Linkvertise or redo /keygen to generate a new key.";
+            }
+        });
+
+        // Show/hide creator information paragraph
+        document.getElementById("creatorBtn").addEventListener("click", function() {
+            var infoParagraph = document.getElementById("infoParagraph");
+            if (infoParagraph.style.display === "none") {
+                infoParagraph.style.display = "block";
+            } else {
+                infoParagraph.style.display = "none";
+            }
+        });
+
+        // Toggle visibility of key input field for PG bot key
+        document.getElementById("pgBotKeyBtn").addEventListener("click", function() {
+            var keyInput = document.getElementById("keyInput");
+            if (keyInput.style.display === "none") {
+                keyInput.style.display = "block";
+            } else {
+                keyInput.style.display = "none";
             }
         });
     </script>
