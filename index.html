@@ -103,7 +103,7 @@
     <p>Enter the key you received to access the content:</p>
     <div id="keyForm">
         <input type="text" id="keyInput" name="key" placeholder="Enter key..." required>
-        <button type="button" id="verifyBtn">Verify Key</button> <!-- Change to type="button" to prevent form submission -->
+        <button type="button" id="verifyBtn">Verify Key</button>
     </div>
     <div class="content">
         <p>I'm 13. I'm a young programmer who programs in JavaScript, Python, and Node.js. If you want to support me, you can donate to my PayPal (<a href="https://www.paypal.me/raph33214">https://www.paypal.me/raph33214</a>) or join my Discord server.</p>
@@ -137,16 +137,15 @@
         document.getElementById("verifyBtn").addEventListener("click", async function() {
             showLoading(); // Show loading overlay
             const key = document.getElementById("keyInput").value;
-            var progress = 0; // Initialize progress
-            // Increment progress every second until it reaches 100%
-            var interval = setInterval(function() {
-                progress += 1;
-                document.getElementById("loadingText").innerText = `Loading... ${progress}%`;
-                if (progress >= 100) {
-                    clearInterval(interval); // Stop the interval when progress reaches 100%
-                    setTimeout(hideLoading, 1000); // Hide loading overlay after 1 second
-                }
-            }, 50); // Update progress every 50 milliseconds
+            
+            // Simulate verifying key
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate server-side verification
+            
+            // Assume key verification is successful
+            // Here you can replace the alert with your logic to activate the key for the user's account
+            alert("Key verified and activated for your account!");
+            
+            hideLoading(); // Hide loading overlay
         });
 
         // Show loading overlay on page load
